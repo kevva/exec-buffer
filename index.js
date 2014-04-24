@@ -59,7 +59,7 @@ ExecBuffer.prototype.src = function (path) {
 
 ExecBuffer.prototype.dest = function (path) {
     if (!arguments.length) {
-        return this._src;
+        return this._dest;
     }
 
     this._dest = path;
