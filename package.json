@@ -23,7 +23,8 @@
     "exec"
   ],
   "dependencies": {
-    "rimraf": "^2.2.6"
+    "rimraf": "^2.2.6",
+    "tempfile": "^0.1.3"
   },
   "devDependencies": {
     "gifsicle": "^0.1.5",

@@ -11,23 +11,46 @@ $ npm install --save exec-buffer
 ## Usage
 
 ```js
-var execBuffer = require('exec-buffer');
+var ExecBuffer = require('exec-buffer');
 var fs = require('fs');
 var gifsicle = require('gifsicle').path;
-var tempfile = require('tempfile');
 
-var src = tempfile('.gif');
-var dest = tempfile('.gif');
+var execBuffer = new ExecBuffer();
 
-execBuffer(gifsicle, fs.readFileSync('test.gif'), { src: src, dest: dest, args: ['-o', dest, src] }, function (err, data) {
-    if (err) {
-        throw err;
-    }
+execBuffer
+    .use(gifsicle, ['-o', execBuffer.dest, execBuffer.src])
+    .run(fs.readFileSync('test.gif'), function (err, data) {
+        if (err) {
+            throw err;
+        }
 
-    console.log(data);
-    // <Buffer 47 49 46 38 37 61 ...>
+        console.log(data);
+        // <Buffer 47 49 46 38 37 61 ...>
+    });
 });
 ```
+
+## API
+
+### new ExecBuffer
+
+Creates a new `ExecBuffer` instance.
+
+### .use(bin, args)
+
+Accepts a path to a binary and an Array of arguments.
+
+### .src(path)
+
+Set or get the temporary source path.
+
+### .dest(path)
+
+Set or get the temporary destination path.
+
+### .run(buf, cb)
+
+Run the Buffer through the child process.
 
 ## License
 

@@ -2,22 +2,22 @@
 'use strict';
 
 var assert = require('assert');
-var execBuffer = require('../');
+var ExecBuffer = require('../');
 var fs = require('fs');
 var gifsicle = require('gifsicle').path;
 var path = require('path');
-var tempfile = require('tempfile');
 
 describe('execBuffer()', function () {
     it('should return a optimized Buffer', function (cb) {
-        var src = tempfile('.gif');
-        var dest = tempfile('.gif');
         var buf = fs.readFileSync(path.join(__dirname, 'fixtures/test.gif'));
+        var execBuffer = new ExecBuffer();
 
-        execBuffer(gifsicle, buf, { src: src, dest: dest, args: ['-o', dest, src] }, function (err, data) {
-            assert(data.length > 0);
-            assert(data.length < buf.length);
-            cb();
-        });
+        execBuffer
+            .use(gifsicle, ['-o', execBuffer.dest(), execBuffer.src()])
+            .run(buf, function (err, data) {
+                assert(data.length > 0);
+                assert(data.length < buf.length);
+                cb();
+            });
     });
 });
