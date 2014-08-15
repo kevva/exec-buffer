@@ -13,7 +13,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "mocha --reporter list"
+    "test": "node test/test.js"
   },
   "files": [
     "index.js"
@@ -27,7 +27,7 @@
     "tempfile": "^1.0.0"
   },
   "devDependencies": {
-    "gifsicle": "^0.1.5",
-    "mocha": "^1.18.2"
+    "ava": "0.0.3",
+    "gifsicle": "^0.1.5"
   }
 }
