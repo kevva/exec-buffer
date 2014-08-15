@@ -81,27 +81,32 @@ ExecBuffer.prototype.run = function (buf, cb) {
 
     fs.writeFile(src, buf, function (err) {
         if (err) {
-            return cb(err);
+            cb(err);
+            return;
         }
 
         execFile(self.bin, self.args, function (err) {
             if (err) {
-                return cb(err);
+                cb(err);
+                return;
             }
 
             fs.readFile(dest, function (err, data) {
                 if (err) {
-                    return cb(err);
+                    cb(err);
+                    return;
                 }
 
                 rm(src, function (err) {
                     if (err) {
-                        return cb(err);
+                        cb(err);
+                        return;
                     }
 
                     rm(dest, function (err) {
                         if (err) {
-                            return cb(err);
+                            cb(err);
+                            return;
                         }
 
                         cb(null, data);

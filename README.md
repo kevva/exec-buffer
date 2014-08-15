@@ -4,7 +4,7 @@
 
 ## Install
 
-```bash
+```ba
 $ npm install --save exec-buffer
 ```
 
@@ -38,7 +38,7 @@ Creates a new `ExecBuffer` instance.
 
 ### .use(bin, args)
 
-Accepts a path to a binary and an Array of arguments.
+Accepts a path to a binary and an `Array` of arguments.
 
 ### .src(path)
 
@@ -50,7 +50,7 @@ Set or get the temporary destination path.
 
 ### .run(buf, cb)
 
-Run the Buffer through the child process.
+Run the `Buffer` through the child process.
 
 ## License
 
