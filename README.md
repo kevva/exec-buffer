@@ -18,7 +18,7 @@ var gifsicle = require('gifsicle').path;
 var execBuffer = new ExecBuffer();
 
 execBuffer
-    .use(gifsicle, ['-o', execBuffer.dest, execBuffer.src])
+    .use(gifsicle, ['-o', execBuffer.dest(), execBuffer.src()])
     .run(fs.readFileSync('test.gif'), function (err, data) {
         if (err) {
             throw err;
