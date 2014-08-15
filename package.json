@@ -24,11 +24,10 @@
   ],
   "dependencies": {
     "rimraf": "^2.2.6",
-    "tempfile": "^0.1.3"
+    "tempfile": "^1.0.0"
   },
   "devDependencies": {
     "gifsicle": "^0.1.5",
-    "mocha": "^1.18.2",
-    "tempfile": "^0.1.3"
+    "mocha": "^1.18.2"
   }
 }
