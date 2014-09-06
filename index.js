@@ -85,9 +85,14 @@ ExecBuffer.prototype.run = function (buf, cb) {
             return;
         }
 
-        execFile(self.bin, self.args, function (err) {
+        execFile(self.bin, self.args, function (err, stdout, stderr) {
             if (err) {
                 cb(err);
+                return;
+            }
+
+            if (stderr) {
+                cb(stderr);
                 return;
             }
 
