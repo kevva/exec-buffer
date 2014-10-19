@@ -18,15 +18,15 @@ var gifsicle = require('gifsicle').path;
 var execBuffer = new ExecBuffer();
 
 execBuffer
-    .use(gifsicle, ['-o', execBuffer.dest(), execBuffer.src()])
-    .run(fs.readFileSync('test.gif'), function (err, data) {
-        if (err) {
-            throw err;
-        }
+	.use(gifsicle, ['-o', execBuffer.dest(), execBuffer.src()])
+	.run(fs.readFileSync('test.gif'), function (err, data) {
+		if (err) {
+			throw err;
+		}
 
-        console.log(data);
-        // <Buffer 47 49 46 38 37 61 ...>
-    });
+		console.log(data);
+		// <Buffer 47 49 46 38 37 61 ...>
+	});
 });
 ```
 

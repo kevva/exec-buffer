@@ -12,12 +12,12 @@ var tempfile = require('tempfile');
  */
 
 function ExecBuffer() {
-    if (!(this instanceof ExecBuffer)) {
-        return new ExecBuffer();
-    }
+	if (!(this instanceof ExecBuffer)) {
+		return new ExecBuffer();
+	}
 
-    this.src(tempfile());
-    this.dest(tempfile());
+	this.src(tempfile());
+	this.dest(tempfile());
 }
 
 /**
@@ -29,9 +29,9 @@ function ExecBuffer() {
  */
 
 ExecBuffer.prototype.use = function (bin, args) {
-    this.bin = bin;
-    this.args = args;
-    return this;
+	this.bin = bin;
+	this.args = args;
+	return this;
 };
 
 /**
@@ -42,12 +42,12 @@ ExecBuffer.prototype.use = function (bin, args) {
  */
 
 ExecBuffer.prototype.src = function (path) {
-    if (!arguments.length) {
-        return this._src;
-    }
+	if (!arguments.length) {
+		return this._src;
+	}
 
-    this._src = path;
-    return this;
+	this._src = path;
+	return this;
 };
 
 /**
@@ -58,12 +58,12 @@ ExecBuffer.prototype.src = function (path) {
  */
 
 ExecBuffer.prototype.dest = function (path) {
-    if (!arguments.length) {
-        return this._dest;
-    }
+	if (!arguments.length) {
+		return this._dest;
+	}
 
-    this._dest = path;
-    return this;
+	this._dest = path;
+	return this;
 };
 
 /**
@@ -75,51 +75,51 @@ ExecBuffer.prototype.dest = function (path) {
  */
 
 ExecBuffer.prototype.run = function (buf, cb) {
-    var self = this;
-    var src = this.src();
-    var dest = this.dest();
+	var self = this;
+	var src = this.src();
+	var dest = this.dest();
 
-    fs.writeFile(src, buf, function (err) {
-        if (err) {
-            cb(err);
-            return;
-        }
+	fs.writeFile(src, buf, function (err) {
+		if (err) {
+			cb(err);
+			return;
+		}
 
-        execFile(self.bin, self.args, function (err, stdout, stderr) {
-            if (err) {
-                cb(err);
-                return;
-            }
+		execFile(self.bin, self.args, function (err, stdout, stderr) {
+			if (err) {
+				cb(err);
+				return;
+			}
 
-            if (stderr) {
-                cb(stderr);
-                return;
-            }
+			if (stderr) {
+				cb(stderr);
+				return;
+			}
 
-            fs.readFile(dest, function (err, data) {
-                if (err) {
-                    cb(err);
-                    return;
-                }
+			fs.readFile(dest, function (err, data) {
+				if (err) {
+					cb(err);
+					return;
+				}
 
-                rm(src, function (err) {
-                    if (err) {
-                        cb(err);
-                        return;
-                    }
+				rm(src, function (err) {
+					if (err) {
+						cb(err);
+						return;
+					}
 
-                    rm(dest, function (err) {
-                        if (err) {
-                            cb(err);
-                            return;
-                        }
+					rm(dest, function (err) {
+						if (err) {
+							cb(err);
+							return;
+						}
 
-                        cb(null, data);
-                    });
-                });
-            });
-        });
-    });
+						cb(null, data);
+					});
+				});
+			});
+		});
+	});
 };
 
 /**
