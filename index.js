@@ -69,7 +69,7 @@ ExecBuffer.prototype.dest = function (path) {
 /**
  * Run buffer through the child process
  *
- * @param {Buffer} buffer
+ * @param {Buffer} buf
  * @param {Function} cb
  * @api public
  */
