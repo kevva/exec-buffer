@@ -32,25 +32,49 @@ execBuffer
 
 ## API
 
-### new ExecBuffer
+### new ExecBuffer()
 
 Creates a new `ExecBuffer` instance.
 
 ### .use(bin, args)
 
-Accepts a path to a binary and an `Array` of arguments.
+#### bin
+
+Type: `String`
+
+Path to the binary.
+
+#### args
+
+Type: `Array`
+
+Arguments to run the binary with.
 
 ### .src(path)
+
+Type: `String`
 
 Set or get the temporary source path.
 
 ### .dest(path)
 
+Type: `String`
+
 Set or get the temporary destination path.
 
 ### .run(buf, cb)
 
-Run the `Buffer` through the child process.
+#### buf
+
+Type: `Buffer`
+
+The `Buffer` to be ran through the child process.
+
+#### cb(err, data)
+
+Type: `Function`
+
+Returns a `Buffer` with the new data.
 
 ## License
 
