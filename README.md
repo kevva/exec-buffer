@@ -32,9 +32,11 @@ execBuffer
 
 ## API
 
-### new ExecBuffer()
+### new ExecBuffer(opts)
 
-Creates a new `ExecBuffer` instance.
+Creates a new `ExecBuffer` instance. Available options are:
+
+* `stderr`: Whether to add `stderr` output to `err` in the callback. Defaults to `true`.
 
 ### .use(bin, args)
 
