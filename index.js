@@ -94,7 +94,7 @@ ExecBuffer.prototype.run = function (buf, cb) {
 				return;
 			}
 
-			if (this.opts.stderr && stderr) {
+			if (self.opts.stderr && stderr) {
 				cb(stderr);
 				return;
 			}
