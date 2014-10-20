@@ -1,6 +1,6 @@
 {
   "name": "exec-buffer",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Run a buffer through a child process",
   "license": "MIT",
   "repository": "kevva/exec-buffer",
