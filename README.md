@@ -1,4 +1,4 @@
-# exec-buffer [![Build Status](https://travis-ci.org/kevva/exec-buffer.svg?branch=master)](https://travis-ci.org/kevva/exec-buffer)
+# exec-buffer [![Build Status](http://img.shields.io/travis/kevva/exec-buffer.svg?style=flat)](https://travis-ci.org/kevva/exec-buffer)
 
 > Run a Buffer through a child process
 
