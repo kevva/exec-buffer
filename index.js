@@ -8,17 +8,14 @@ var tempfile = require('tempfile');
 /**
  * Run a buffer through a child process
  *
- * @param {Object} opts
  * @api public
  */
 
-function ExecBuffer(opts) {
+function ExecBuffer() {
 	if (!(this instanceof ExecBuffer)) {
-		return new ExecBuffer(opts);
+		return new ExecBuffer();
 	}
 
-	this.opts = opts || {};
-	this.opts.stderr = this.opts.stderr !== false;
 	this.src(tempfile());
 	this.dest(tempfile());
 }
@@ -88,14 +85,9 @@ ExecBuffer.prototype.run = function (buf, cb) {
 			return;
 		}
 
-		execFile(self.bin, self.args, function (err, stdout, stderr) {
+		execFile(self.bin, self.args, function (err) {
 			if (err) {
 				cb(err);
-				return;
-			}
-
-			if (self.opts.stderr && stderr) {
-				cb(stderr);
 				return;
 			}
 

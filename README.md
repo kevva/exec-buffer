@@ -17,9 +17,8 @@ var gifsicle = require('gifsicle').path;
 
 var execBuffer = new ExecBuffer();
 
-execBuffer
-	.use(gifsicle, ['-o', execBuffer.dest(), execBuffer.src()])
-	.run(fs.readFileSync('test.gif'), function (err, data) {
+execBuffer.use(gifsicle, ['-o', execBuffer.dest(), execBuffer.src()]);
+execBuffer.run(fs.readFileSync('test.gif'), function (err, data) {
 		if (err) {
 			throw err;
 		}
@@ -32,11 +31,9 @@ execBuffer
 
 ## API
 
-### new ExecBuffer(opts)
+### new ExecBuffer()
 
-Creates a new `ExecBuffer` instance. Available options are:
-
-* `stderr`: Whether to add `stderr` output to `err` in the callback. Defaults to `true`.
+Creates a new `ExecBuffer` instance.
 
 ### .use(bin, args)
 
