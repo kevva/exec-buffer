@@ -97,22 +97,43 @@ ExecBuffer.prototype.run = function (buf, cb) {
 					return;
 				}
 
-				rm(src, function (err) {
+				self.clean(function (err) {
 					if (err) {
 						cb(err);
 						return;
 					}
 
-					rm(dest, function (err) {
-						if (err) {
-							cb(err);
-							return;
-						}
-
-						cb(null, data);
-					});
+					cb(null, data);
 				});
 			});
+		});
+	});
+};
+
+/**
+ * Cleanup temporary files
+ *
+ * @param {Function} cb
+ * @api private
+ */
+
+ExecBuffer.prototype.clean = function (cb) {
+	var src = this.src();
+	var dest = this.dest();
+
+	rm(src, function (err) {
+		if (err) {
+			cb(err);
+			return;
+		}
+
+		rm(dest, function (err) {
+			if (err) {
+				cb(err);
+				return;
+			}
+
+			cb();
 		});
 	});
 };
