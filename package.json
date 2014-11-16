@@ -28,6 +28,6 @@
   },
   "devDependencies": {
     "ava": "^0.0.4",
-    "gifsicle": "^1.0.2"
+    "gifsicle": "^2.0.0"
   }
 }
