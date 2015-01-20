@@ -6,6 +6,23 @@ var gifsicle = require('gifsicle').path;
 var path = require('path');
 var test = require('ava');
 
+test('expose a constructor', function (t) {
+	t.plan(1);
+	t.assert(typeof ExecBuffer === 'function');
+});
+
+test('return an instance if it called without `new`', function (t) {
+	t.plan(1);
+	t.assert(ExecBuffer() instanceof ExecBuffer);
+});
+
+test('set temporary directories', function (t) {
+	t.plan(2);
+	var execBuffer = new ExecBuffer();
+	t.assert(execBuffer.src().length);
+	t.assert(execBuffer.dest().length);
+});
+
 test('should return a optimized Buffer', function (t) {
 	t.plan(4);
 
