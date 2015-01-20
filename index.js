@@ -85,7 +85,7 @@ ExecBuffer.prototype.run = function (buf, cb) {
 			return;
 		}
 
-		execFile(self.bin, self.args, function (err) {
+		execFile(self.bin, self.args, function (err, stdout, stderr) {
 			if (err) {
 				cb(err);
 				return;
@@ -103,7 +103,7 @@ ExecBuffer.prototype.run = function (buf, cb) {
 						return;
 					}
 
-					cb(null, data);
+					cb(null, data, stderr);
 				});
 			});
 		});
