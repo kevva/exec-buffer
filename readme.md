@@ -24,7 +24,7 @@ execBuffer.run(fs.readFileSync('test.gif'), function (err, data) {
 		}
 
 		console.log(data);
-		// <Buffer 47 49 46 38 37 61 ...>
+		//=> <Buffer 47 49 46 38 37 61 ...>
 	});
 });
 ```

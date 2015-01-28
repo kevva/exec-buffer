@@ -27,7 +27,7 @@ test('should return a optimized Buffer', function (t) {
 	t.plan(4);
 
 	fs.readFile(path.join(__dirname, 'fixtures/test.gif'), function (err, buf) {
-		t.assert(!err);
+		t.assert(!err, err);
 
 		var execBuffer = new ExecBuffer();
 
