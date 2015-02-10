@@ -29,8 +29,15 @@ function ExecBuffer() {
  */
 
 ExecBuffer.prototype.use = function (bin, args) {
-	this.bin = bin;
-	this.args = args;
+	if (!arguments.length) {
+		return this._use;
+	}
+
+	this._use = {
+		args: args,
+		bin: bin
+	};
+
 	return this;
 };
 
@@ -75,29 +82,25 @@ ExecBuffer.prototype.dest = function (path) {
  */
 
 ExecBuffer.prototype.run = function (buf, cb) {
-	var self = this;
-	var src = this.src();
-	var dest = this.dest();
-
-	fs.writeFile(src, buf, function (err) {
+	fs.writeFile(this.src(), buf, function (err) {
 		if (err) {
 			cb(err);
 			return;
 		}
 
-		execFile(self.bin, self.args, function (err, stdout, stderr) {
+		execFile(this.use().bin, this.use().args, function (err, stdout, stderr) {
 			if (err) {
 				cb(err);
 				return;
 			}
 
-			fs.readFile(dest, function (err, data) {
+			fs.readFile(this.dest(), function (err, data) {
 				if (err) {
 					cb(err);
 					return;
 				}
 
-				self.clean(function (err) {
+				this.cleanup(function (err) {
 					if (err) {
 						cb(err);
 						return;
@@ -105,9 +108,9 @@ ExecBuffer.prototype.run = function (buf, cb) {
 
 					cb(null, data, stderr);
 				});
-			});
-		});
-	});
+			}.bind(this));
+		}.bind(this));
+	}.bind(this));
 };
 
 /**
@@ -117,17 +120,14 @@ ExecBuffer.prototype.run = function (buf, cb) {
  * @api private
  */
 
-ExecBuffer.prototype.clean = function (cb) {
-	var src = this.src();
-	var dest = this.dest();
-
-	rm(src, function (err) {
+ExecBuffer.prototype.cleanup = function (cb) {
+	rm(this.src(), function (err) {
 		if (err) {
 			cb(err);
 			return;
 		}
 
-		rm(dest, function (err) {
+		rm(this.dest(), function (err) {
 			if (err) {
 				cb(err);
 				return;
@@ -135,7 +135,7 @@ ExecBuffer.prototype.clean = function (cb) {
 
 			cb();
 		});
-	});
+	}.bind(this));
 };
 
 /**

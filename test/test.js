@@ -23,19 +23,24 @@ test('set temporary directories', function (t) {
 	t.assert(execBuffer.dest().length);
 });
 
+test('set binary and arguments', function (t) {
+	t.plan(2);
+	var execBuffer = new ExecBuffer()
+		.use('foo', ['--bar']);
+	t.assert(execBuffer._use.args[0] === '--bar');
+	t.assert(execBuffer._use.bin === 'foo');
+});
+
 test('should return a optimized Buffer', function (t) {
-	t.plan(4);
+	t.plan(3);
 
-	fs.readFile(path.join(__dirname, 'fixtures/test.gif'), function (err, buf) {
+	var src = fs.readFileSync(path.join(__dirname, 'fixtures/test.gif'), null);
+	var execBuffer = new ExecBuffer();
+
+	execBuffer.use(gifsicle, ['-o', execBuffer.dest(), execBuffer.src()]);
+	execBuffer.run(src, function (err, data) {
 		t.assert(!err, err);
-
-		var execBuffer = new ExecBuffer();
-
-		execBuffer.use(gifsicle, ['-o', execBuffer.dest(), execBuffer.src()]);
-		execBuffer.run(buf, function (err, data) {
-			t.assert(!err, err);
-			t.assert(data.length > 0);
-			t.assert(data.length < buf.length);
-		});
+		t.assert(data.length);
+		t.assert(data.length < src.length);
 	});
 });

@@ -51,11 +51,15 @@ Arguments to run the binary with.
 
 ### .src(path)
 
+#### path
+
 Type: `String`
 
 Set or get the temporary source path.
 
 ### .dest(path)
+
+#### path
 
 Type: `String`
 
@@ -69,11 +73,11 @@ Type: `Buffer`
 
 The `Buffer` to be ran through the child process.
 
-#### cb(err, data)
+#### cb(err, data, stderr)
 
 Type: `Function`
 
-Returns a `Buffer` with the new data.
+Returns a `Buffer` with the new `data` and any `stderr` output.
 
 ## License
 
