@@ -2,7 +2,7 @@
 
 var execFile = require('child_process').execFile;
 var fs = require('fs');
-var rm = require('rimraf');
+var rimraf = require('rimraf');
 var tempfile = require('tempfile');
 
 /**
@@ -121,13 +121,13 @@ ExecBuffer.prototype.run = function (buf, cb) {
  */
 
 ExecBuffer.prototype.cleanup = function (cb) {
-	rm(this.src(), function (err) {
+	rimraf(this.src(), function (err) {
 		if (err) {
 			cb(err);
 			return;
 		}
 
-		rm(this.dest(), function (err) {
+		rimraf(this.dest(), function (err) {
 			if (err) {
 				cb(err);
 				return;

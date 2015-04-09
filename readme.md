@@ -2,32 +2,31 @@
 
 > Run a Buffer through a child process
 
+
 ## Install
 
-```ba
+```
 $ npm install --save exec-buffer
 ```
+
 
 ## Usage
 
 ```js
-var ExecBuffer = require('exec-buffer');
 var fs = require('fs');
+var ExecBuffer = require('exec-buffer');
 var gifsicle = require('gifsicle').path;
 
 var execBuffer = new ExecBuffer();
 
 execBuffer.use(gifsicle, ['-o', execBuffer.dest(), execBuffer.src()]);
 execBuffer.run(fs.readFileSync('test.gif'), function (err, data) {
-		if (err) {
-			throw err;
-		}
-
 		console.log(data);
 		//=> <Buffer 47 49 46 38 37 61 ...>
 	});
 });
 ```
+
 
 ## API
 
@@ -35,17 +34,17 @@ execBuffer.run(fs.readFileSync('test.gif'), function (err, data) {
 
 Creates a new `ExecBuffer` instance.
 
-### .use(bin, args)
+### .use(binary, arguments)
 
-#### bin
+#### binary
 
-Type: `String`
+Type: `string`
 
 Path to the binary.
 
-#### args
+#### arguments
 
-Type: `Array`
+Type: `array`
 
 Arguments to run the binary with.
 
@@ -53,7 +52,7 @@ Arguments to run the binary with.
 
 #### path
 
-Type: `String`
+Type: `string`
 
 Set or get the temporary source path.
 
@@ -61,23 +60,36 @@ Set or get the temporary source path.
 
 #### path
 
-Type: `String`
+Type: `string`
 
 Set or get the temporary destination path.
 
-### .run(buf, cb)
+### .run(buffer, callback)
 
-#### buf
+Runs the buffer through the child process.
 
-Type: `Buffer`
+#### buffer
 
-The `Buffer` to be ran through the child process.
+Type: `buffer`
 
-#### cb(err, data, stderr)
+The `buffer` to be ran through the child process.
 
-Type: `Function`
+#### callback(err, data, stderr)
 
-Returns a `Buffer` with the new `data` and any `stderr` output.
+Type: `function`
+
+##### data
+
+Type: `buffer`
+
+The new data produced by the child process.
+
+##### stderr
+
+Type: `string`
+
+Any `stderr` output from the child process.
+
 
 ## License
 
