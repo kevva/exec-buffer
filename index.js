@@ -1,5 +1,4 @@
 'use strict';
-
 var execFile = require('child_process').execFile;
 var fs = require('fs');
 var rimraf = require('rimraf');
