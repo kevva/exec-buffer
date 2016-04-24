@@ -1,39 +1,32 @@
-'use strict';
-var fs = require('fs');
-var path = require('path');
-var gifsicle = require('gifsicle').path;
-var test = require('ava');
-var ExecBuffer = require('../');
+import fs from 'fs';
+import path from 'path';
+import gifsicle from 'gifsicle';
+import pify from 'pify';
+import test from 'ava';
+import Fn from '../';
 
-test('expose a constructor', function (t) {
-	t.plan(1);
-	t.assert(typeof ExecBuffer === 'function', typeof ExecBuffer);
+test('expose a constructor', t => {
+	t.is(typeof Fn, 'function');
 });
 
-test('set temporary directories', function (t) {
-	t.plan(2);
-	var execBuffer = new ExecBuffer();
-	t.assert(execBuffer.input, execBuffer.input);
-	t.assert(execBuffer.output, execBuffer.output);
+test('set temporary directories', t => {
+	const {input, output} = new Fn();
+	t.truthy(input);
+	t.truthy(output);
 });
 
-test('set binary and arguments', function (t) {
-	t.plan(2);
-	var execBuffer = new ExecBuffer().use('foo', ['--bar']);
-	t.assert(execBuffer.args[0] === '--bar', execBuffer.args[0]);
-	t.assert(execBuffer.bin === 'foo', execBuffer.bin);
+test('set binary and arguments', t => {
+	const {args, bin} = new Fn().use('foo', ['--bar']);
+	t.deepEqual(args, ['--bar']);
+	t.is(bin, 'foo');
 });
 
-test('should return a optimized Buffer', function (t) {
-	t.plan(2);
+test('return a optimized Buffer', async t => {
+	const buf = await pify(fs.readFile)(path.join(__dirname, 'fixtures/test.gif'));
+	const execBuffer = new Fn();
+	const data = await execBuffer
+		.use(gifsicle.path, ['-o', execBuffer.output, execBuffer.input])
+		.run(buf);
 
-	var src = fs.readFileSync(path.join(__dirname, 'fixtures/test.gif'));
-	var execBuffer = new ExecBuffer();
-
-	execBuffer
-		.use(gifsicle, ['-o', execBuffer.output, execBuffer.input])
-		.run(src).then(function (data) {
-			t.assert(data.length, data.length);
-			t.assert(data.length < src.length, data.length);
-		});
+	t.true(data.length < buf.length);
 });
