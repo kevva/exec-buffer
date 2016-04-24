@@ -1,6 +1,6 @@
 # exec-buffer [![Build Status](http://img.shields.io/travis/kevva/exec-buffer.svg?style=flat)](https://travis-ci.org/kevva/exec-buffer)
 
-> Run a Buffer through a child process
+> Run a buffer through a child process
 
 
 ## Install

@@ -3,7 +3,7 @@ import path from 'path';
 import gifsicle from 'gifsicle';
 import pify from 'pify';
 import test from 'ava';
-import Fn from '../';
+import Fn from './';
 
 test('expose a constructor', t => {
 	t.is(typeof Fn, 'function');
@@ -21,8 +21,8 @@ test('set binary and arguments', t => {
 	t.is(bin, 'foo');
 });
 
-test('return a optimized Buffer', async t => {
-	const buf = await pify(fs.readFile)(path.join(__dirname, 'fixtures/test.gif'));
+test('return a optimized buffer', async t => {
+	const buf = await pify(fs.readFile)(path.join(__dirname, 'fixture.gif'));
 	const execBuffer = new Fn();
 	const data = await execBuffer
 		.use(gifsicle.path, ['-o', execBuffer.output, execBuffer.input])
