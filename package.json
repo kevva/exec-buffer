@@ -13,7 +13,7 @@
     "node": ">=4"
   },
   "scripts": {
-    "test": "ava"
+    "test": "xo && ava"
   },
   "files": [
     "index.js"
@@ -29,6 +29,10 @@
   },
   "devDependencies": {
     "ava": "*",
-    "gifsicle": "^2.0.0"
+    "gifsicle": "^2.0.0",
+    "xo": "*"
+  },
+  "xo": {
+    "esnext": true
   }
 }
