@@ -13,26 +13,42 @@ $ npm install --save exec-buffer
 ## Usage
 
 ```js
-var fs = require('fs');
-var ExecBuffer = require('exec-buffer');
-var gifsicle = require('gifsicle').path;
+const fs = require('fs');
+const ExecBuffer = require('exec-buffer');
+const gifsicle = require('gifsicle').path;
 
-var execBuffer = new ExecBuffer();
+const exec = new ExecBuffer();
 
-execBuffer.use(gifsicle, ['-o', execBuffer.dest(), execBuffer.src()]);
-execBuffer.run(fs.readFileSync('test.gif'), function (err, data) {
+exec
+	.use(gifsicle, ['-o', exec.output, exec.input]);
+	.run(fs.readFileSync('test.gif')).then(data => {
 		console.log(data);
 		//=> <Buffer 47 49 46 38 37 61 ...>
 	});
-});
 ```
 
 
 ## API
 
-### new ExecBuffer()
+### new ExecBuffer(options)
 
 Creates a new `ExecBuffer` instance.
+
+#### options
+
+##### input
+
+Type: `string`<br>
+Default: `tmp`
+
+Set the temporary input path.
+
+##### output
+
+Type: `string`<br>
+Default: `tmp`
+
+Set the temporary output path.
 
 ### .use(binary, arguments)
 
@@ -48,47 +64,15 @@ Type: `array`
 
 Arguments to run the binary with.
 
-### .src(path)
+### .run(buffer)
 
-#### path
-
-Type: `string`
-
-Set or get the temporary source path.
-
-### .dest(path)
-
-#### path
-
-Type: `string`
-
-Set or get the temporary destination path.
-
-### .run(buffer, callback)
-
-Runs the buffer through the child process.
+Runs the buffer through the child process. Returns a promise for a buffer.
 
 #### buffer
 
 Type: `buffer`
 
 The `buffer` to be ran through the child process.
-
-#### callback(err, data, stderr)
-
-Type: `function`
-
-##### data
-
-Type: `buffer`
-
-The new data produced by the child process.
-
-##### stderr
-
-Type: `string`
-
-Any `stderr` output from the child process.
 
 
 ## License

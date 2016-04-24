@@ -10,7 +10,7 @@
     "url": "https://github.com/kevva"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=4"
   },
   "scripts": {
     "test": "node test/test.js"
@@ -23,7 +23,8 @@
     "exec"
   ],
   "dependencies": {
-    "rimraf": "^2.2.6",
+    "execa": "^0.3.0",
+    "pify": "^2.3.0",
     "tempfile": "^1.0.0"
   },
   "devDependencies": {
