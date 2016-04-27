@@ -4,12 +4,8 @@ const execa = require('execa');
 const pify = require('pify');
 const tempfile = require('tempfile');
 const fsP = pify(fs);
-const input = Symbol('input');
-const output = Symbol('output');
-const obj = {
-	[input]: tempfile(),
-	[output]: tempfile()
-};
+const input = Symbol('inputPath');
+const output = Symbol('outputPath');
 
 module.exports = opts => {
 	opts = Object.assign({}, opts);
@@ -26,10 +22,15 @@ module.exports = opts => {
 		return Promise.reject(new Error('Arguments are required'));
 	}
 
-	return fsP.writeFile(obj[input], opts.input)
+	const inputPath = tempfile();
+	const outputPath = tempfile();
+
+	opts.args = opts.args.map(x => x === input ? inputPath : x === output ? outputPath : x);
+
+	return fsP.writeFile(inputPath, opts.input)
 		.then(() => execa(opts.bin, opts.args))
-		.then(() => fsP.readFile(obj[output]));
+		.then(() => fsP.readFile(outputPath));
 };
 
-module.exports.input = obj[input];
-module.exports.output = obj[output];
+module.exports.input = input;
+module.exports.output = output;
