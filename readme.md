@@ -14,65 +14,51 @@ $ npm install --save exec-buffer
 
 ```js
 const fs = require('fs');
-const ExecBuffer = require('exec-buffer');
+const execBuffer = require('exec-buffer');
 const gifsicle = require('gifsicle').path;
 
-const exec = new ExecBuffer();
-
-exec
-	.use(gifsicle, ['-o', exec.output, exec.input]);
-	.run(fs.readFileSync('test.gif')).then(data => {
-		console.log(data);
-		//=> <Buffer 47 49 46 38 37 61 ...>
-	});
+execBuffer({
+	input: fs.readFileSync('test.gif'),
+	bin: gifsicle,
+	args: ['-o', execBuffer.output, execBuffer.input]
+}).then(data => {
+	console.log(data);
+	//=> <Buffer 47 49 46 38 37 61 ...>
+});
 ```
 
 
 ## API
 
-### new ExecBuffer(options)
-
-Creates a new `ExecBuffer` instance.
+### execBuffer(options)
 
 #### options
 
 ##### input
 
-Type: `string`<br>
-Default: `tmp`
+Type: `buffer`
 
-Set the temporary input path.
+The `buffer` to be ran through the child process.
 
-##### output
-
-Type: `string`<br>
-Default: `tmp`
-
-Set the temporary output path.
-
-### .use(binary, arguments)
-
-#### binary
+##### bin
 
 Type: `string`
 
 Path to the binary.
 
-#### arguments
+##### args
 
 Type: `array`
 
 Arguments to run the binary with.
 
-### .run(buffer)
+### execBuffer.input
 
-Runs the buffer through the child process. Returns a promise for a buffer.
+Returns a temporary path to where the input file will be written.
 
-#### buffer
+### execBuffer.output
 
-Type: `buffer`
-
-The `buffer` to be ran through the child process.
+Returns a temporary path to where the output file will be written.
 
 
 ## License

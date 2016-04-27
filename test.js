@@ -1,32 +1,25 @@
 import fs from 'fs';
 import path from 'path';
 import gifsicle from 'gifsicle';
+import isGif from 'is-gif';
 import pify from 'pify';
 import test from 'ava';
-import Fn from './';
-
-test('expose a constructor', t => {
-	t.is(typeof Fn, 'function');
-});
+import m from './';
 
 test('set temporary directories', t => {
-	const {input, output} = new Fn();
+	const {input, output} = m;
 	t.truthy(input);
 	t.truthy(output);
 });
 
-test('set binary and arguments', t => {
-	const {args, bin} = new Fn().use('foo', ['--bar']);
-	t.deepEqual(args, ['--bar']);
-	t.is(bin, 'foo');
-});
-
 test('return a optimized buffer', async t => {
 	const buf = await pify(fs.readFile)(path.join(__dirname, 'fixture.gif'));
-	const execBuffer = new Fn();
-	const data = await execBuffer
-		.use(gifsicle.path, ['-o', execBuffer.output, execBuffer.input])
-		.run(buf);
+	const data = await m({
+		input: buf,
+		bin: gifsicle.path,
+		args: ['-o', m.output, m.input]
+	});
 
 	t.true(data.length < buf.length);
+	t.true(isGif(data));
 });

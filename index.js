@@ -4,29 +4,32 @@ const execa = require('execa');
 const pify = require('pify');
 const tempfile = require('tempfile');
 const fsP = pify(fs);
+const input = Symbol('input');
+const output = Symbol('output');
+const obj = {
+	[input]: tempfile(),
+	[output]: tempfile()
+};
 
-class ExecBuffer {
-	constructor(opts) {
-		this.opts = opts || {};
-		this.input = this.opts.input || tempfile();
-		this.output = this.opts.output || tempfile();
+module.exports = opts => {
+	opts = Object.assign({}, opts);
+
+	if (!Buffer.isBuffer(opts.input)) {
+		return Promise.reject(new Error('Input is required'));
 	}
 
-	use(bin, args) {
-		this.bin = bin;
-		this.args = args;
-		return this;
+	if (typeof opts.bin !== 'string') {
+		return Promise.reject(new Error('Binary is required'));
 	}
 
-	run(buf) {
-		if (!Buffer.isBuffer(buf)) {
-			return Promise.reject(new TypeError('Expected a buffer'));
-		}
-
-		return fsP.writeFile(this.input, buf)
-			.then(() => execa(this.bin, this.args))
-			.then(() => fsP.readFile(this.output));
+	if (!Array.isArray(opts.args)) {
+		return Promise.reject(new Error('Arguments are required'));
 	}
-}
 
-module.exports = ExecBuffer;
+	return fsP.writeFile(obj[input], opts.input)
+		.then(() => execa(opts.bin, opts.args))
+		.then(() => fsP.readFile(obj[output]));
+};
+
+module.exports.input = obj[input];
+module.exports.output = obj[output];
