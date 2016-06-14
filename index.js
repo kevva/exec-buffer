@@ -1,10 +1,13 @@
 'use strict';
 const fs = require('fs');
 const execa = require('execa');
+const pFinally = require('p-finally');
 const pify = require('pify');
+const rimraf = require('rimraf');
 const tempfile = require('tempfile');
 
 const fsP = pify(fs);
+const rmP = pify(rimraf);
 const input = Symbol('inputPath');
 const output = Symbol('outputPath');
 
@@ -28,9 +31,14 @@ module.exports = opts => {
 
 	opts.args = opts.args.map(x => x === input ? inputPath : x === output ? outputPath : x);
 
-	return fsP.writeFile(inputPath, opts.input)
+	const promise = fsP.writeFile(inputPath, opts.input)
 		.then(() => execa(opts.bin, opts.args))
 		.then(() => fsP.readFile(outputPath));
+
+	return pFinally(promise, () => Promise.all([
+		rmP(inputPath),
+		rmP(outputPath)
+	]));
 };
 
 module.exports.input = input;
