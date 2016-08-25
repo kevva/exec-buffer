@@ -23,7 +23,7 @@
     "exec"
   ],
   "dependencies": {
-    "execa": "^0.3.0",
+    "execa": "^0.4.0",
     "pify": "^2.3.0",
     "tempfile": "^1.0.0"
   },
