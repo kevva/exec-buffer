@@ -3,6 +3,7 @@ const fs = require('fs');
 const execa = require('execa');
 const pify = require('pify');
 const tempfile = require('tempfile');
+
 const fsP = pify(fs);
 const input = Symbol('inputPath');
 const output = Symbol('outputPath');
