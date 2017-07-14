@@ -52,6 +52,20 @@ Type: `array`
 
 Arguments to run the binary with.
 
+#### inputPath
+
+Type: `string`<br>
+Default: `tempfile()`
+
+Where `input` will be written to. In most cases you don't need to set this.
+
+#### outputPath
+
+Type: `string`<br>
+Default: `tempfile()`
+
+Where output file will be written to. In most cases you don't need to set this.
+
 ### execBuffer.input
 
 Returns a temporary path to where the input file will be written.
