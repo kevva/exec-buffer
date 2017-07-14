@@ -17,7 +17,7 @@ test('return a optimized buffer', async t => {
 	const buf = await pify(fs.readFile)(path.join(__dirname, 'fixture.gif'));
 	const data = await m({
 		input: buf,
-		bin: gifsicle.path,
+		bin: gifsicle,
 		args: ['-o', m.output, m.input]
 	});
 

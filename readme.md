@@ -1,12 +1,12 @@
 # exec-buffer [![Build Status](http://img.shields.io/travis/kevva/exec-buffer.svg?style=flat)](https://travis-ci.org/kevva/exec-buffer)
 
-> Run a buffer through a child process
+> Run a Buffer through a child process
 
 
 ## Install
 
 ```
-$ npm install --save exec-buffer
+$ npm install exec-buffer
 ```
 
 
@@ -34,11 +34,13 @@ execBuffer({
 
 #### options
 
+Type: `Object`
+
 ##### input
 
-Type: `buffer`
+Type: `Buffer`
 
-The `buffer` to be ran through the child process.
+The `Buffer` to be ran through the child process.
 
 ##### bin
 
@@ -48,7 +50,7 @@ Path to the binary.
 
 ##### args
 
-Type: `array`
+Type: `Array`
 
 Arguments to run the binary with.
 
