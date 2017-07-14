@@ -54,14 +54,14 @@ Type: `Array`
 
 Arguments to run the binary with.
 
-#### inputPath
+##### inputPath
 
 Type: `string`<br>
 Default: `tempfile()`
 
 Where `input` will be written to. In most cases you don't need to set this.
 
-#### outputPath
+##### outputPath
 
 Type: `string`<br>
 Default: `tempfile()`
